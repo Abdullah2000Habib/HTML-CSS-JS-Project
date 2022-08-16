@@ -7,6 +7,21 @@ document.querySelector(".setting-icon .fa-cog").onclick = function () {
   document.querySelector(".settings-box").classList.toggle("open");
 };
 
+//Switch Color
+
+const colorsLi = document.querySelectorAll(".colors-list li");
+//Loop On List Items
+colorsLi.forEach((li) => {
+  //Click On Evrey List items
+  li.addEventListener("click", (e) => {
+    //set color on root
+    document.documentElement.style.setProperty(
+      "--main-color",
+      e.target.dataset.color
+    );
+  });
+});
+
 //Select Landing Page Element
 let landingPage = document.querySelector(".landing-page");
 
