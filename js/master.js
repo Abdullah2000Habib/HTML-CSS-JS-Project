@@ -5,6 +5,16 @@ let mainColors = localStorage.getItem("color_option");
 if (mainColors !== null) {
   //set color on root
   document.documentElement.style.setProperty("--main-color", mainColors);
+
+  //Remove active class from all childrens
+
+  document.querySelectorAll(".colors-list li").forEach((element) => {
+    element.classList.remove("active");
+
+    if (element.dataset.color === mainColors) {
+      element.classList.add("active");
+    }
+  });
 }
 
 //Toggle Spin Class On Icon
@@ -30,6 +40,25 @@ colorsLi.forEach((li) => {
     );
     //Set Color On Local Storage
     localStorage.setItem("color_option", e.target.dataset.color);
+    //Remove active class from all childrens
+
+    e.target.parentElement.querySelectorAll(".active").forEach((element) => {
+      element.classList.remove("active");
+    });
+    //add active class for target element
+    e.target.classList.add("active");
+  });
+});
+
+//Switch Random background  Option
+
+const randomBackEl = document.querySelectorAll(".random-background span");
+
+//Loop On All Span
+
+randomBackEl.forEach((span) => {
+  //Click On Evrey Span
+  span.addEventListener("click", (e) => {
     //Remove active class from all childrens
 
     e.target.parentElement.querySelectorAll(".active").forEach((element) => {
