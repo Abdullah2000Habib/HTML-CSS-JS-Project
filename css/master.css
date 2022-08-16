@@ -22,7 +22,7 @@ body{
     width: 200px;
     z-index: 1000;
     min-height: 100vh;
-transition: var(--main-transition);
+    transition: var(--main-transition);
 
 
 }
@@ -30,17 +30,22 @@ transition: var(--main-transition);
 
     left: 0;
   }
-  
+
 .settings-box .setting-icon{
 
     position: absolute;
     right: -30px;
     top: 100px;
     background-color: var(--white-color);
-    padding: 8px 0;
-    width: 30px;
+  
     text-align: center;
     cursor: pointer;
+   
+}
+.settings-box .setting-icon .fa-cog{
+    padding: 8px 0;
+    width: 30px;
+   
 
 }
 .settings-box .settings-container{
