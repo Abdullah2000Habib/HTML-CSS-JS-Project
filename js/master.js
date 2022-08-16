@@ -1,3 +1,12 @@
+//Check If There Is Local Storage Color Option
+
+let mainColors = localStorage.getItem("color_option");
+
+if (mainColors !== null) {
+  //set color on root
+  document.documentElement.style.setProperty("--main-color", mainColors);
+}
+
 //Toggle Spin Class On Icon
 
 document.querySelector(".setting-icon .fa-cog").onclick = function () {
@@ -19,6 +28,15 @@ colorsLi.forEach((li) => {
       "--main-color",
       e.target.dataset.color
     );
+    //Set Color On Local Storage
+    localStorage.setItem("color_option", e.target.dataset.color);
+    //Remove active class from all childrens
+
+    e.target.parentElement.querySelectorAll(".active").forEach((element) => {
+      element.classList.remove("active");
+    });
+    //add active class for target element
+    e.target.classList.add("active");
   });
 });
 
