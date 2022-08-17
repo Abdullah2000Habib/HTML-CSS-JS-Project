@@ -23,6 +23,30 @@ let backgroundOption = true;
 
 let backgroundInterval;
 
+//Check If There IS Local Storage Random Background Items
+
+let backgroundLocalItem = localStorage.getItem("background_option");
+
+//Check If Random Background local Storage Not Empty
+
+if (backgroundLocalItem !== null) {
+  if (backgroundLocalItem === "true") {
+    backgroundOption = true;
+  } else {
+    backgroundOption = false;
+  }
+}
+
+//Remove Active Class From All Spans
+
+document.querySelectorAll(".random-background span").forEach((element) => {
+  element.classList.remove("active");
+});
+if (backgroundOption === true) {
+  document.querySelector(".random-background .yes").classList.add("active");
+} else {
+  document.querySelector(".random-background .no").classList.add("active");
+}
 //Toggle Spin Class On Icon
 
 document.querySelector(".setting-icon .fa-cog").onclick = function () {
@@ -76,12 +100,17 @@ randomBackEl.forEach((span) => {
     if (e.target.dataset.background === "yes") {
       backgroundOption = true;
       randomizeImgs();
+      //Add Background Option To Local Storage
+      localStorage.setItem("background_option", true);
     } else {
       backgroundOption = false;
       clearInterval(backgroundInterval);
+      localStorage.setItem("background_option", false);
     }
   });
 });
+
+randomizeImgs();
 
 //Select Landing Page Element
 let landingPage = document.querySelector(".landing-page");
