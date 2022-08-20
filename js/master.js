@@ -70,13 +70,7 @@ colorsLi.forEach((li) => {
     );
     //Set Color On Local Storage
     localStorage.setItem("color_option", e.target.dataset.color);
-    //Remove active class from all childrens
-
-    e.target.parentElement.querySelectorAll(".active").forEach((element) => {
-      element.classList.remove("active");
-    });
-    //add active class for target element
-    e.target.classList.add("active");
+    handleActive(e);
   });
 });
 
@@ -89,13 +83,7 @@ const randomBackEl = document.querySelectorAll(".random-background span");
 randomBackEl.forEach((span) => {
   //Click On Evrey Span
   span.addEventListener("click", (e) => {
-    //Remove active class from all childrens
-
-    e.target.parentElement.querySelectorAll(".active").forEach((element) => {
-      element.classList.remove("active");
-    });
-    //add active class for target element
-    e.target.classList.add("active");
+    handleActive(e);
 
     if (e.target.dataset.background === "yes") {
       backgroundOption = true;
@@ -157,12 +145,8 @@ window.onscroll = function () {
     let allSkills = document.querySelectorAll(
       ".skill-box .skill-progress span"
     );
-    allSkills.forEach((skill) => {
-      skill.style.width = skill.dataset.progress;
-    });
-  } else {
-    allSkills.forEach((skill) => {
-      skill.style.width = 0;
+    allSkills.forEach((span) => {
+      span.style.width = span.dataset.progress;
     });
   }
 };
@@ -238,3 +222,107 @@ document.addEventListener("click", function (e) {
     document.querySelector(".popup-overlay").remove();
   }
 });
+
+//Select All bullets
+
+const allBullets = document.querySelectorAll(".nav-bullets .bullet");
+
+allBullets.forEach((bullet) => {
+  bullet.addEventListener("click", function (e) {
+    document.querySelector(e.target.dataset.section).scrollIntoView({
+      behavior: "smooth",
+    });
+  });
+});
+
+const allLinks = document.querySelectorAll(".links a");
+
+allLinks.forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    document.querySelector(e.target.dataset.section).scrollIntoView({
+      behavior: "smooth",
+    });
+  });
+});
+
+//Handel Active State
+function handleActive(ev) {
+  ev.target.parentElement.querySelectorAll(".active").forEach((element) => {
+    element.classList.remove("active");
+  });
+  //add active class for target element
+  ev.target.classList.add("active");
+}
+
+let bulletsSpan = document.querySelectorAll(".bullets-option span");
+
+let bulletsContainer = document.querySelector(".nav-bullets");
+
+let bulletsLocalItems = localStorage.getItem("bullets_option");
+
+if (bulletsContainer !== null) {
+  bulletsSpan.forEach((span) => {
+    span.classList.remove("active");
+  });
+
+  if (bulletsLocalItems === "block") {
+    document.querySelector(".bullets-option .yes").classList.add("active");
+  } else {
+    document.querySelector(".bullets-option .no").classList.add("active");
+  }
+
+  bulletsContainer.style.display = bulletsLocalItems;
+}
+
+bulletsSpan.forEach((span) => {
+  span.addEventListener("click", (e) => {
+    if (span.dataset.display === "show") {
+      bulletsContainer.style.display = "block";
+      localStorage.setItem("bullets_option", "block");
+    } else {
+      bulletsContainer.style.display = "none";
+      localStorage.setItem("bullets_option", "none");
+    }
+    handleActive(e);
+  });
+});
+
+//Reset button
+
+document.querySelector(".reset-options").onclick = function () {
+  //  localStorage.clear();
+  localStorage.removeItem("bullets_option");
+  localStorage.removeItem("background_option");
+  localStorage.removeItem("color_option");
+
+  window.location.reload();
+};
+
+//Toggle Menu
+
+let toggleBtn = document.querySelector(".toggle-menu");
+let tLink = document.querySelector(".links");
+
+toggleBtn.onclick = function (e) {
+  e.stopPropagation();
+  this.classList.toggle("menu-active");
+  tLink.classList.toggle("open");
+};
+
+//Clicked anyWhere OutSide The Menu And Toggle Menu
+
+document.addEventListener("click", (e) => {
+  if (e.target !== toggleBtn && e.target !== tLink) {
+    if (tLink.classList.contains("open")) {
+      toggleBtn.classList.toggle("menu-active");
+      tLink.classList.toggle("open");
+    }
+  }
+});
+
+//Stop Propagation menu
+
+tLink.onclick = function (e) {
+  e.stopPropagation();
+};
